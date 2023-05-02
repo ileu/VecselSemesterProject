@@ -1,0 +1,63 @@
+\RequirePackage[dvipdfm]{geometry}
+\RequirePackage{fancyhdr}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[latin1]{inputenc}
+\setlength\parindent{0pt}
+\setlength\parskip{.5\baselineskip}
+\geometry{a4paper,
+    layoutsize={21cm,29.7cm},
+    layoutoffset={0cm,0cm}, 
+    textheight = 23cm}
+\RequirePackage{amsmath,amssymb,amsthm}
+\RequirePackage{graphicx}
+\RequirePackage[dvips]{epsfig} 
+\RequirePackage{float}
+
+%\RequirePackage{hyperref}
+\RequirePackage{pstricks,pst-plot,psfrag}
+\RequirePackage{multirow}
+\RequirePackage{rotating}
+\RequirePackage{siunitx}
+%\RequirePackage{booktabs}
+
+\RequirePackage{url}
+\RequirePackage{natbib}
+\RequirePackage{comment}
+\RequirePackage{placeins}
+%\RequirePackage{bibref}
+% \RequirePackage{datetime2}
+\RequirePackage{textcomp}
+\RequirePackage{gensymb}
+\RequirePackage{wrapfig}
+\RequirePackage{floatflt}
+\RequirePackage{outlines}
+%\RequirePackage{chemformula}
+\RequirePackage[version=4]{mhchem}
+\RequirePackage{acronym}
+%\usepackage[dvipsnames,svgnames,x11names]{xcolor}
+%\usepackage[marginparwidth=2.5cm]{geometry}
+%\RequirePackage[markup=underlined]{changes}
+
+\RequirePackage{mhchem}
+\RequirePackage[allow-number-unit-breaks]{siunitx}
+\RequirePackage{graphicx}
+%\RequirePackage{tabularray}
+\RequirePackage{booktabs}
+\RequirePackage{longtable}
+\RequirePackage{tabularx}
+\RequirePackage{lscape}
+%\RequirePackage{xltabular}
+\RequirePackage{tabto}
+\RequirePackage{ltablex}
+\RequirePackage[hidelinks]{hyperref}
+\RequirePackage[labelfont=bf,textfont=md]{caption}
+
+\newenvironment{mytab}{\par\tiny\tabularx}{\endtabularx}
+\newcommand{\citeay}[1]{\citeauthor{#1} (\citeyear{#1})}
+\newcommand{\citeaywp}[1]{\citeauthor{#1}, \citeyear{#1}}
+\DeclareSIUnit\year{yr}
+\DeclareSIUnit\TIC{ TIC}
+\DeclareSIUnit\TC{ TC}
+\DeclareSIUnit\C{ C}
+\DeclareSIUnit\atmosphere{atm}
+\sisetup{per-mode=reciprocal}

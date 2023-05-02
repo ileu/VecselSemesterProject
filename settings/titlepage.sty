@@ -1,0 +1,64 @@
+\newcommand{\@supervision}{}
+\newcommand{\supervision}[1]{\gdef\@supervision{#1}}
+
+\newcommand{\@student}{}
+\newcommand{\student}[1]{\gdef\@student{#1}}
+
+\newcommand{\@ethid}{}
+\newcommand{\ethid}[1]{\gdef\@ethid{#1}}
+
+\newcommand{\@thesisType}{}
+\newcommand{\thesisType}[1]{\gdef\@thesisType{#1}}
+
+\newcommand{\@titleInfo}{}
+\newcommand{\titleInfo}[1]{\gdef\@titleInfo{#1}}
+
+% Definition of title page______________________________________________________
+\renewcommand{\maketitle}{
+
+\pagestyle{empty}
+
+\begin{center}
+\hspace{0.02\textwidth}
+\parbox[c][\textheight][t]{0.97\textwidth}{
+\begin{center}
+
+\vspace*{-2cm}
+\begin{minipage}[c]{0.4\textwidth}
+ \begin{flushleft}
+ \hspace*{-1.5cm}
+ \includegraphics[height=1.5cm]{images/ethlogo.eps}
+ \end{flushleft}
+\end{minipage}
+\hfill
+\begin{minipage}[c]{0.4\textwidth}
+ \begin{flushright}
+ \hspace*{0.4cm}
+ \includegraphics[height=1cm]{images/eth_dphys_logo_pos.png}
+ \end{flushright}
+\end{minipage}
+\vspace*{5.0cm}
+
+{\large \@student \\
+     \@ethid}
+\vspace{1.5cm}
+
+{\Huge \bf \@title \par}
+\vspace{2.5cm} 
+
+{\large \bf \@thesisType}\\[3ex]
+
+% ADAPT THIS FOR YOUR INSTITUTE
+{\@titleInfo}\\
+\vspace{3.5cm}
+
+{\bf Supervision} \\[1.5ex]
+\@supervision
+
+\vfill
+\@date
+
+\end{center}
+}
+\end{center}
+}
