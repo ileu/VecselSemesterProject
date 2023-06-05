@@ -31,13 +31,14 @@ def three_step(x):
     )
 
 
-dat = sio.loadmat(f"datafiles\data_13.mat")["data0"]
+dat = sio.loadmat(f"VecselSemesterProject\Python\datafiles\data_13.mat")["data0"]
 
 x_steps = np.linspace(0, 10, 800)
 # steps = three_step(x_steps) + sin_noise(x_steps, 2, 2e-3, 2e-3)
 # plt.plot(x_steps, steps)
 
 dat = dat[200:1000] / np.max(dat)
+dat = dat.flatten()
 mask = dat > 0.97
 diff_mask = np.flatnonzero((mask[:-1]) & (np.invert(mask[1:])))
 masked_steps = dat.copy()
@@ -52,27 +53,37 @@ plt.xticks([])
 plt.xlim(-.5,10.5)
 plt.legend(framealpha=1)
 plt.tight_layout()
-plt.savefig(r"Images\trace1.png")
+# plt.savefig(r"VecselSemesterProject\Python\Images\trace1.png")
 
-plt.hlines(0.97, -1, 11, "gray", "--", alpha=0.3, label="Trigger level")
-
-plt.legend(framealpha=1)
-plt.tight_layout()
-plt.savefig(r"Images\trace2.png")
-
-plt.plot(x_steps, masked_steps, "r")
+plt.hlines(0.97, -1, 11, "gray", "--", alpha=0.8, label="Trigger level")
 
 plt.legend(framealpha=1)
 plt.tight_layout()
-plt.savefig(r"Images\trace3.png")
+# plt.savefig(r"VecselSemesterProject\Python\Images\trace2.png")
+
+# plt.plot(x_steps, masked_steps, "r")
+
+# plt.legend(framealpha=1)
+# plt.tight_layout()
+# plt.savefig(r"VecselSemesterProject\Python\Images\trace3.png")
 
 plt.scatter(x_steps[diff_mask], dat[diff_mask], marker="o", color="r", s=30, zorder=5, label="Trigger point")
 
 
-# log = np.logspace(-3.5, 0, 30)
-# plt.plot(log, gain_sat_r_gauss(log, 4, 103, 99, np.inf))
+atol = 1e-3
+
+level = (np.isclose(np.diff(dat), 0, atol=atol))
+
+levelDat = level * dat[:-1]
+levelDat[levelDat == 0] = np.nan
+
+for s in np.ma.clump_unmasked(np.ma.masked_invalid(levelDat))[1:-1]:
+    nan = np.full_like(levelDat, np.nan)
+    nan[s] = levelDat[s]
+    plt.plot(x_steps[:-1], nan, linewidth=4)
+
 
 plt.legend(framealpha=1)
 plt.tight_layout()
-plt.savefig(r"Images\old_trace.png")
+# plt.savefig(r"VecselSemesterProject\Python\Images\old_trace.png")
 plt.show()

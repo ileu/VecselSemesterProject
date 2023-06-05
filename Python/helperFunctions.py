@@ -76,7 +76,7 @@ def make_gif(frame_folder, filename, suffix=".png", duration=300):
     ]
     frame_one = frames[0]
     frame_one.save(
-        "filename",
+        filename,
         format="GIF",
         append_images=frames,
         save_all=True,

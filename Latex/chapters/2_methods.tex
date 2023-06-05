@@ -1,21 +1,14 @@
 \chapter{Methods}\label{chapter:methods}
-\section{Experiment}\label{sec:experiment}
-To accurately determine the characterstic parameters of a VECSEL chip, a setup is required that can measure a small change of the reflectivity over a dynamic range of about 4 order of magnitde in pulse fluence. Such a setup has ben build and used by and is shown in.
+% \section{Experiment}\label{sec:experiment}
+In order to accurately determine the characterstic parameters of a VECSEL chip, it is necessary to have an experimental setup that can measure a small change, in the order of \qty{0.1}{\percent} in the reflectivity over a dynamic range of about 4 order of magnitde in pulse fluence. A dedicated setup fulfilling these criteria has been constructed and utilized by  (INSERT HERE REFERENCES).
+
+For the measurements, a total of 4 different VECSEL chip were used, with three of them having a different structure (further discussed in \cref{sec:vecsel}). We were interested on the impact of different pump powers and the temperatures on the characteristic parameters of the VECSEL across the three different structures. For this we measured the nonlinear reflectivity for each chip for 9 different pump powers in the range from \qtyrange{0}{32}{\watt} and for three temperatures \qtylist{-10;0;10}{\degreeCelsius}.
+
+The subsequent section provide an overview of the measuerment setup,the structure of the VECSEL chips and the data processing methods.
 
 
-\section{VECSEL Chips}
+\input{chapters/s_setup.tex}
 
-\subsection{Experimental setup}\label{subsection:set-up}
-The pulsed laser is a modelocked Ti:sapphire laser, emitting femtosecond pulses at \SI{810}{\nm} with a repetion rate of \SI{80}{\MHz} and an average output power of \SI{4}{\W}. The beam then passes through an optical parametric oscillator, where a nonlinear crystal is used to split the beam in an idler and signal wave. Reduced the max output power to \SI{650}{\mW}. The idler has been tuned to \SI{2071.7}{\nm} and was kept there by an automeded feedback loop 
-
-To achieve a wide dynamic range of pulse fluences, the beam passes through two wire-grid polarizers where one is placed on a controllable rotation stage. To control attenuation.   
-
-\subsubsection{Automation of the pump power}{\label{subsubsection:pump}}
-\subsubsection{Signal trace analysis}{\label{subsubsection:signal}}
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=8cm]{images/trace1.png}
-\end{figure}
-\section{Data processing}\label{sec:processing}
+\input{chapters/s_signal.tex}
 
 

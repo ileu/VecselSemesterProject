@@ -2,7 +2,7 @@
 \RequirePackage{fancyhdr}
 \setlength{\headheight}{14.5pt}
 \RequirePackage[T1]{fontenc}
-\RequirePackage[latin1]{inputenc}
+\RequirePackage[utf8]{inputenc}
 \setlength\parindent{0pt}
 \setlength\parskip{.5\baselineskip}
 \geometry{a4paper,
@@ -10,8 +10,11 @@
     layoutoffset={0cm,0cm}, 
     textheight = 23cm}
 \RequirePackage{amsmath,amssymb,amsthm}
+\RequirePackage{floatrow}
 \RequirePackage{graphicx}
-\RequirePackage[dvips]{epsfig} 
+\RequirePackage[dvips]{epsfig}
+% \RequirePackage{subcaption} 
+\RequirePackage[label font=bf,labelformat=simple]{subfig}
 \RequirePackage{float}
 
 %\RequirePackage{hyperref}
@@ -52,6 +55,8 @@
 \RequirePackage{ltablex}
 \RequirePackage[hidelinks]{hyperref}
 \RequirePackage[labelfont=bf,textfont=md]{caption}
+\RequirePackage[capitalise]{cleveref}
+\RequirePackage{svg}
 
 \newenvironment{mytab}{\par\tiny\tabularx}{\endtabularx}
 \newcommand{\citeay}[1]{\citeauthor{#1} (\citeyear{#1})}
@@ -62,3 +67,7 @@
 \DeclareSIUnit\C{ C}
 \DeclareSIUnit\atmosphere{atm}
 \sisetup{per-mode=reciprocal}
+
+
+\floatsetup[figure]{style=plain,subcapbesideposition=top}
+\renewcommand\thesubfigure{\alph{subfigure})}

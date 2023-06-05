@@ -11,7 +11,7 @@ import pandas as pd
 
 location = r"D:\polybox"
 paths = [
-    r"\Semesterarbeit\SV167-b2-14C-2050mm",
+    # r"\Semesterarbeit\SV167-b2-14C-2050mm",
     r"\Semesterarbeit\SV167-b2-0C-2070nm",
     r"\Semesterarbeit\SV167-b2-n10C-2070nm",
     r"\Semesterarbeit\SV167-b5-10C-2070nm",
@@ -39,13 +39,14 @@ for path in paths:
     fit_range = (2e-2, 150)
 
     maxR = 0
+    minR = 120
 
     curvFig, curvAx = plt.subplots(1)
     maxFig, maxAx = plt.subplots(1)
 
     paramFig, paramAx = plt.subplots(2, 2, squeeze=False, figsize=(6.4 * 2, 4.8 * 2))
     paramAx = paramAx.flatten()
-    paramShorts = ["$F_{sat}$", "$R_{ss}$", "$R_{rns}$", "$F_2$"]
+    paramShorts = ["$F_{sat}$", "$R_{ss}$", "$R_{ns}$", "$F_2$"]
     paramNames = [
         r"Saturation fluence [$\mu J/cm^2$]",
         r"Small signal reflectivity [%]",
@@ -56,11 +57,10 @@ for path in paths:
 
     for i, file in enumerate(files):
         fname = os.path.splitext(file)[0]
-        (title, temp, wavelength, current) = fname.split("_")[-4:]
+        (title, temp_name, wavelength, current) = fname.split("_")[-4:]
         title = "-".join(title.split("-")[-2:])
-        print(i, title, temp, current, wavelength)
+        print(i, title, temp_name, current, wavelength)
         current = int(current[:-1])
-
         data = sio.loadmat(file)
         refl = data["R"][0]
         fluence = data["fluence"][0]
@@ -71,6 +71,10 @@ for path in paths:
         fit_r = refl[mask]
         fit_fl = fluence[mask]
         fit_err = error[mask]
+
+        minRi = refl[0]
+        if minRi < minR:
+            minR = minRi
 
         maxRi = max(refl)
         if maxRi > maxR:
@@ -112,20 +116,32 @@ for path in paths:
         fit_params.append([current, *fitp])
         curvAx.errorbar(fluence, refl, yerr=error, label=power, c=color, ls="")
         curvAx.plot(fluence, gain_sat_r_gauss(fluence, *fitp), color=color)
-        maxAx.scatter(power_curve(current), maxRi, color=color)
+        maxAx.scatter(power_curve_digit(current), maxRi, color=color)
         # maxAx.scatter(power, refl[3], color=color)
         # np.savetxt(fname + "_fitp.csv", fitp, delimiter=',', header= ','.join(paramShorts))
         for p, par in enumerate(fitp):
-            paramAx[p].scatter(power_curve(current), par, color=color, label=power)
+            paramAx[p].scatter(
+                power_curve_digit(current), par, color=color, label=power
+            )
+
+    if temp_name[0] == "n":
+        temp = "$-10$ °C"
+    elif temp_name[0] == "0":
+        temp = "$0$ °C"
+    elif temp_name[0] == "R":
+        temp = "Room temperature"
+    else:
+        temp = "$10$ °C"
 
     curvAx.set_xscale("log")
-    curvAx.set_ylim(89, 110)
-    curvAx.set_xlabel(r"Fluence [$\mu J / cm^2$]")
-    curvAx.set_ylabel("Reflectivity [%]")
-    curvAx.set_title(
-        f"Gain saturation curves for {title} @ {temp} & {wavelength} \n max Reflectivity of {maxR:.1f}"
-    )
-    curvAx.legend(ncol=2, loc=1)
+    curvAx.set_xlim(curvAx.get_xlim()[0], 75)
+    curvAx.set_ylim(minR * 0.98, maxR * 1.02)
+    # curvAx.set_ylim(98.7, 102.2)
+    curvAx.tick_params(axis='both', which='major', labelsize=10)
+    curvAx.set_xlabel(r"Fluence  / µJ cm$^{-2}$", fontsize=14)
+    curvAx.set_ylabel("Reflectivity / %", fontsize=14)
+    curvAx.set_title(f"Nonlinear reflectivity for {title} at {temp}", fontsize=16)
+    curvAx.legend(ncol=2, loc=1, fontsize=10)
 
     maxAx.set_xlabel("Pump power")
     maxAx.set_ylabel("max Reflectivity")
@@ -146,9 +162,13 @@ for path in paths:
     maxFig.tight_layout()
     paramFig.tight_layout()
 
-    curvFig.savefig(path + r"\gainsat.png", bbox_inches="tight")
-    maxFig.savefig(path + r"\maxfig.png", bbox_inches="tight")
-    paramFig.savefig(path + r"\paramfig.png", bbox_inches="tight")
+    curvFig.savefig(path + r"\gainsat.png", bbox_inches="tight", dpi=200)
+    maxFig.savefig(path + r"\maxfig.png", bbox_inches="tight", dpi=200)
+    paramFig.savefig(path + r"\paramfig.png", bbox_inches="tight", dpi=200)
     df = pd.DataFrame(fit_params, columns=["Current [$A$]", *paramNames])
-    df.to_csv(path + rf"\{title}_{temp}_{wavelength}_fit_parameters.csv", sep=",")
+    df.to_csv(path + rf"\{title}_{temp_name}_{wavelength}_fit_parameters.csv", sep=",")
     print(f"Saved {title}")
+    # plt.close(maxFig)
+    # plt.close(paramFig)
+    # plt.show()
+    # break

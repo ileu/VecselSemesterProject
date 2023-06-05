@@ -1,8 +1,10 @@
+import matplotlib
 import numpy as np
 import scipy.io as sio
 import glob
 
 import matplotlib.pyplot as plt
+
 
 from helperFunctions import make_gif
 
@@ -18,7 +20,9 @@ def eformat(f, prec, exp_digits):
 
 
 def plot_traces():
-    dat_files = sorted(glob.glob(r"datafiles\*.mat"), key=len)
+    dat_files = sorted(
+        glob.glob(r"VecselSemesterProject\Python\datafiles\*.mat"), key=len
+    )
     log = np.logspace(-3.5, 0, 30)
 
     for i, file in enumerate(dat_files):
@@ -31,13 +35,14 @@ def plot_trace(file, i, fluence):
 
     # steps = three_step(x_steps) + sin_noise(x_steps, 2, 2e-3, 2e-3)
     # plt.plot(x_steps, steps)
-
+    cmap = matplotlib.colormaps.get_cmap("Blues")
+    # c = cmap((i + 10) / 40)
+    c = "blue"
     dat = (dat - np.min(dat)) / (np.max(dat) - np.min(dat))
     mask = dat > level
     diff_mask = np.flatnonzero((mask[:-1]) & (np.invert(mask[1:])))
     masked_steps = dat.copy()
     masked_steps[np.invert(mask)] = np.nan
-    # slope_mask = np.arange(diff_mask[-1] - 10, diff_mask[-1] + 10)
     x_steps = np.linspace(0, 10, 800)
     trace = np.zeros_like(dat, dtype=bool)
     test_mask = diff_mask - diff_mask[rep]
@@ -59,8 +64,8 @@ def plot_trace(file, i, fluence):
     plt.ylabel("Normalised signal")
     plt.title(
         "Fluence "
-        + rf"${fluence * 1e3:.2g}".replace("e", "\cdot10^{")
-        + "}$[$mJ/cm^2$]"
+        + rf"${fluence * 1e3:.2g}".replace("+0", "").replace("e", "\cdot10^{")
+        + "}$ / µJ cm$^{-2}$"
     )
     plt.xticks([])
     plt.xlim(-0.5, 10.5)
@@ -68,10 +73,17 @@ def plot_trace(file, i, fluence):
     plt.legend(framealpha=1, loc=1)
     plt.tight_layout()
     # plt.show()
-    plt.savefig(rf"Images\gif\trace{i}.png")
+    plt.savefig(rf"VecselSemesterProject\Python\Images\gif\trace{i}.png")
     plt.gcf().clf()
 
 
 if __name__ == "__main__":
     plot_traces()
-    make_gif(r"Images\gif", "my_awesome.gif")
+    # norm = matplotlib.colors.LogNorm(vmin=10 ** (-3.5), vmax=1)
+    # sm = plt.cm.ScalarMappable(cmap="Blues", norm=norm)
+    # plt.colorbar(sm, cax=plt.gca())
+    # plt.savefig(
+    #     r"C:\Users\Ueli\Dropbox\ETH\Semsterarbeit\VecselSemesterProject\Python\Images\trace_complete.png"
+    # )
+    make_gif(r"VecselSemesterProject\Python\Images\gif", "my_awesome.gif")
+    print("DONE")
