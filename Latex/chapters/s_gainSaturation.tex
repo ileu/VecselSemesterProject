@@ -1,21 +1,31 @@
 \section{Gain saturation}
 
-Gain saturation is a phenomenon that occurs when an amplifier device, such as a laser gain medium, cannot maintain a fixed gain for arbitrarily high input powers. This would require adding arbitrary amounts of power to the amplified signal.
+Gain saturation descirbes a phenomanon that occurs when the active region of a laser is unable to maintain its gain as the pump power increases for high values. 
 
-For example, a sudden increase in the signal input power of a laser gain medium will reduce the gain only within a certain time because the population in excited laser ions is only reduced with a certain finite rate. This has important consequences for laser dynamics2.
+To study this behavior, one measures the nonlinear behavior of the reflecitivty for an increasing amount of probe fluence, as can be seen in \cref{fig:gainSat}. To quantify this behavior and gain some macroscopic paramters, a model based on the saturation of the absorber in a SESAM can be fitted to the data. 
 
-In the steady state (i.e., for long time scales with constant pump power and resonator losses), the gain is where Psat is the saturation power. Note that it has been implicitly assumed that the pump rate is constant, i.e., there are no effects of pump saturation2.
+\begin{equation}
+    \centering
+    R(F)=R_{ns} \frac{F_{sat}}{F} \ln\left\{1 + \frac{R_{ss}}{R_{ns}} \left[\exp{ \left(\frac{F}{F_{sat}}\right) } - 1\right]\right\} \exp{\left(-\frac{F}{F_2}\right)}
+    \label{eq:model}
+\end{equation}
 
-The dynamic behavior of a laser is determined by the interaction of the intracavity light field with the gain medium. Essentially, the intracavity laser power can grow or decay exponentially according to the difference between gain and resonator losses, whereas the rate of change in the gain is determined by stimulated and spontaneous emission (and possibly by other effects such as quenching and energy transfer)3.
+The parameters from \cref{eq:model} are the saturation fluence $F_{sat}$, the small signal reflictivity $R_{ss}$, the nonsaturable reflecitivty $R_{ns}$ and the rollover parameter $F_{2}$.
 
-In the case of a laser gain medium, the gain does not instantly adjust to the level according to the optical input power because the gain medium stores some amount of energy (excitation energy of the laser-active ions, atoms or molecules), and the stored energy determines the gain. For example, a sudden increase in the signal input power of a laser gain medium will reduce the gain only within a certain time because the population in excited laser ions is only reduced with a certain finite rate. This has important consequences for laser dynamics2.
+The saturation fluence $F_{sat}$ is the fluence at which the reflecitivity reduces to $1/e$ of its maximum. It also represents the point at which the population inversion inside the active region becomes saturated, therefore it is closely tied to the material properties of the active region.
 
-Gain saturation is a phenomenon that occurs when an amplifier device, such as a laser gain medium, cannot maintain a fixed gain for arbitrarily high input powers. This would require adding arbitrary amounts of power to the amplified signal. Therefore, the gain must be reduced for high input powers; this phenomenon is called gain saturation (or gain compression).
+The small signal reflecitivity $R_{ss}$ refers to the reflecitivty at low probe fleunce, where the gain is not significantly saturaed. In this regemie nonlinear effects are minimal and the reflectivity can be consiter the be in the linear regime and the small signal approximation can be applied and the small signal gain can be calcualted as $g_{ss}=R_{ss}-100\%$.
 
-In the case of a laser gain medium, the gain does not instantly adjust to the level according to the optical input power because the gain medium stores some amount of energy (excitation energy of the laser-active ions, atoms or molecules), and the stored energy determines the gain. For example, a sudden increase in the signal input power of a laser gain medium will reduce the gain only within a certain time because the population in excited laser ions is only reduced with a certain finite rate. This has important consequences for laser dynamics.
+The nonsaturable reflectivity $R_{ns}$ arises from absorption and scattering at impurities and interfaces inside the VECSEL strucutre. This limits the maximum performance of the VECSE, thus reducing defect during the growing process is important. Since this effect is associated with imperfection and reflection inside the strucutre it remains relativily constand for different probe fluences. 
 
-\begin{figure}[h]
+The rollover parameter $F_2$ describes further absorption from two photon absorption or higher order effects resulting in a strong decrease in the reflectivity at high fluences.
+
+\Cref{fig:gainSat} shows the key parameters and the fitted model with and without accounting for the rollover for a measurement of a VECSEL with an integrated pump DBR.
+
+
+\begin{figure}[ht]
     \centering
     \includegraphics[width=12cm]{images/gainSat.png}
-    \caption{}
+    \caption{Nonlinear reflectivity measurement for a diamond backed VECSEL with integrated pump DBR versus probe fluence. The data is shown with the fitted model utilizing \cref{eq:model} and the same model without the roll over paramter $F_2$. Additionally the different parameters $R_{ss}$, $R_{ns}$ and $F_{sat}$ are visualized.}
+    \label{fig:gainSat}
 \end{figure}

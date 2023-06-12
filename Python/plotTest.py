@@ -30,6 +30,13 @@ paths = [
     # r"P:\Semesterarbeit\SV167-b5-2-10C-2070nm_bs",
 ]
 
+def save_figure(figure, location, show=False, blocked=True):
+    figure.tight_layout()
+
+    figure.savefig(location, bbox_inches="tight", dpi=200)
+    if show:
+        figure.show(block=blocked)
+
 for path in paths:
     path = location + path
     files = glob.glob(path + r"\*.mat")
@@ -112,7 +119,7 @@ for path in paths:
             )
             fitp = fit[0]
             fitp = np.insert(fitp, 2, rns)
-        print(fitp)
+            
         fit_params.append([current, *fitp])
         curvAx.errorbar(fluence, refl, yerr=error, label=power, c=color, ls="")
         curvAx.plot(fluence, gain_sat_r_gauss(fluence, *fitp), color=color)
@@ -158,17 +165,12 @@ for path in paths:
         )
         pAx.legend(ncol=2, loc=locs[ind])
 
-    curvFig.tight_layout()
-    maxFig.tight_layout()
-    paramFig.tight_layout()
+    save_figure(curvFig, path + r"\gainsat.png")
+    save_figure(maxFig, path + r"\maxfig.png")
+    save_figure(paramFig, path + r"\paramfig.png")
 
-    curvFig.savefig(path + r"\gainsat.png", bbox_inches="tight", dpi=200)
-    maxFig.savefig(path + r"\maxfig.png", bbox_inches="tight", dpi=200)
-    paramFig.savefig(path + r"\paramfig.png", bbox_inches="tight", dpi=200)
     df = pd.DataFrame(fit_params, columns=["Current [$A$]", *paramNames])
     df.to_csv(path + rf"\{title}_{temp_name}_{wavelength}_fit_parameters.csv", sep=",")
     print(f"Saved {title}")
-    # plt.close(maxFig)
-    # plt.close(paramFig)
-    # plt.show()
-    # break
+
+
