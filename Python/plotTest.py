@@ -145,9 +145,9 @@ for path in paths:
     curvAx.set_ylim(minR * 0.98, maxR * 1.02)
     # curvAx.set_ylim(98.7, 102.2)
     curvAx.tick_params(axis='both', which='major', labelsize=10)
-    curvAx.set_xlabel(r"Fluence  / µJ cm$^{-2}$", fontsize=14)
+    curvAx.set_xlabel(r"Probe fluence  / µJ cm$^{-2}$", fontsize=14)
     curvAx.set_ylabel("Reflectivity / %", fontsize=14)
-    curvAx.set_title(f"Nonlinear reflectivity for {title} at {temp}", fontsize=16)
+    # curvAx.set_title(f"Nonlinear reflectivity for {title} at {temp}", fontsize=16)
     curvAx.legend(ncol=2, loc=1, fontsize=10)
 
     maxAx.set_xlabel("Pump power")

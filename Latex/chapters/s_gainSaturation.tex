@@ -10,22 +10,22 @@ To study this behaviour, one measures the nonlinear behaviour of the reflectivit
     \label{eq:model}
 \end{equation}
 
-The parameters from \cref{eq:model} are the saturation fluence $F_{sat}$, the small signal reflectivity $R_{ss}$, the nonsaturable reflectivity $R_{ns}$ and the roll-over parameter $F_{2}$.
+The parameters from \cref{eq:model} are the saturation fluence $F_{sat}$, the small signal reflectivity $R_{ss}$, the nonsaturable reflectivity $R_{ns}$ and the rollover parameter $F_{2}$.
 
 The saturation fluence $F_{sat}$ is the fluence at which the reflectivity reduces to $1/e$ of its maximum. It also represents the point at which the population inversion inside the active region becomes saturated, therefore it is closely tied to the material properties of the active region.
 
-The small signal reflectivity $R_{ss}$ refers to the reflectivity at low probe fluence, where the gain is not significantly saturated. In this regime nonlinear effects are minimal and the reflectivity can be consider the be in the linear regime and the small signal approximation can be applied and the small signal gain can be calculated as $g_{ss}=R_{ss}-100\%$.
+The small signal reflectivity $R_{ss}$ refers to the reflectivity at low probe fluence, where the gain is not significantly saturated. In this regime nonlinear effects are minimal and the reflectivity can be considered to be in the linear regime and the small signal approximation can be applied and the small signal gain can be calculated as $g_{ss}=R_{ss}-100\%$.
 
-The nonsaturable reflectivity $R_{ns}$ arises from absorption and scattering at impurities and interfaces inside the VECSEL structure. This limits the maximum performance of the VECSEL, thus reducing defect during the growing process is important. Since this effect is associated with imperfection and reflection inside the structure it remains relatively constant for different probe fluences. 
+The nonsaturable reflectivity $R_{ns}$ arises from absorption and scattering at impurities and interfaces inside the VECSEL structure. This limits the maximum performance of the VECSEL, thus reducing defect density during the growing process is important. Since this effect is associated with imperfection and reflection inside the structure it remains relatively constant for different probe fluences. 
 
-The roll-over parameter $F_2$ describes further absorption from two photon absorption or higher order effects resulting in a strong decrease in the reflectivity at high fluences.
+The rollover parameter $F_2$ describes further absorption from two photon absorption or higher order effects resulting in a strong decrease in the reflectivity at high fluences.
 
-\Cref{fig:gainSat} shows the key parameters and the fitted model with and without accounting for the roll-over for a measurement of a VECSEL with an integrated pump DBR.
+\Cref{fig:gainSat} shows the key parameters and the fitted model with and without accounting for the rollover for a measurement of a VECSEL with an integrated pump DBR.
 
 
 \begin{figure}[ht]
     \centering
     \includegraphics[width=12cm]{images/gainSat.png}
-    \caption{Nonlinear reflectivity measurement for a diamond backed VECSEL with integrated pump DBR versus probe fluence. The data is shown with the fitted model utilizing \cref{eq:model} and the same model without the roll over parameter $F_2$. Additionally the different parameters $R_{ss}$, $R_{ns}$ and $F_{sat}$ are visualized.}
+    \caption{Nonlinear reflectivity measurement for a VECSEL with integrated pump DBR and diamond heat spreader versus probe fluence. The data is shown with the fitted model utilizing \cref{eq:model} and the same model without the rollover parameter $F_2$. Additionally the different parameters $R_{ss}$, $R_{ns}$ and $F_{sat}$ are visualized.}
     \label{fig:gainSat}
 \end{figure}
