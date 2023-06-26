@@ -4,6 +4,9 @@ import numpy as np
 import glob
 from scipy.stats import binned_statistic
 
+""" File for testing trigger methods
+"""
+
 
 def findLevel(levels):
     lvs = levels.copy()
