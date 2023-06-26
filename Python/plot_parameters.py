@@ -1,35 +1,13 @@
 import matplotlib
-import scipy.io as sio
 import matplotlib.pyplot as plt
 import glob
 import os
-from matplotlib import colormaps as cmp
-import re
 import numpy as np
-from scipy.optimize import curve_fit
-from helperFunctions import gain_sat_r_gauss, power_curve, power_curve_digit
+from helperFunctions import power_curve, paths
 import pandas as pd
 
 location = r"D:\polybox"
-paths = [
-    # r"\Semesterarbeit\SV167-b2-14C-2050mm",
-    r"\Semesterarbeit\SV167-b2-10C-2070nm",
-    r"\Semesterarbeit\SV167-b2-0C-2070nm",
-    r"\Semesterarbeit\SV167-b2-n10C-2070nm",
-    r"\Semesterarbeit\SV167-b5-10C-2070nm",
-    r"\Semesterarbeit\SV167-b5-0C-2070nm",
-    r"\Semesterarbeit\SV167-b5-n10C-2070nm",
-    r"\Semesterarbeit\SV166-a4-10C-2070nm",
-    r"\Semesterarbeit\SV166-a4-0C-2070nm",
-    r"\Semesterarbeit\SV166-a4-n10C-2070nm",
-    r"\Semesterarbeit\SV165-CD2-RT-2070nm",
-    r"\Semesterarbeit\SV165-CD2-10C-2070nm",
-    r"\Semesterarbeit\SV165-CD2-0C-2070nm",
-    r"\Semesterarbeit\SV165-CD2-n10C-2070nm",
-    # r"\Semesterarbeit\SV172-Dia-15C-2070nm",
-    # r"\Semesterarbeit\SV176-a3-15C-2070nm",
-    # r"P:\Semesterarbeit\SV167-b5-2-10C-2070nm_bs",
-]
+
 
 paramFig: matplotlib.figure.Figure
 paramAx: matplotlib.axes.Axes

@@ -6,36 +6,10 @@ from matplotlib import colormaps as cmp
 import re
 import numpy as np
 from scipy.optimize import curve_fit
-from helperFunctions import gain_sat_r_gauss, power_curve, power_curve_digit
+from helperFunctions import gain_sat_r_gauss, paths, power_curve_digit, save_figure
 import pandas as pd
 
 location = r"D:\polybox"
-paths = [
-    # r"\Semesterarbeit\SV167-b2-14C-2050mm",
-    r"\Semesterarbeit\SV167-b2-0C-2070nm",
-    r"\Semesterarbeit\SV167-b2-n10C-2070nm",
-    r"\Semesterarbeit\SV167-b5-10C-2070nm",
-    r"\Semesterarbeit\SV167-b5-0C-2070nm",
-    r"\Semesterarbeit\SV167-b5-n10C-2070nm",
-    r"\Semesterarbeit\SV166-a4-10C-2070nm",
-    r"\Semesterarbeit\SV166-a4-0C-2070nm",
-    r"\Semesterarbeit\SV166-a4-n10C-2070nm",
-    r"\Semesterarbeit\SV165-CD2-RT-2070nm",
-    r"\Semesterarbeit\SV165-CD2-10C-2070nm",
-    r"\Semesterarbeit\SV165-CD2-0C-2070nm",
-    r"\Semesterarbeit\SV165-CD2-n10C-2070nm",
-    r"\Semesterarbeit\SV167-b2-10C-2070nm",
-    r"\Semesterarbeit\SV172-Dia-15C-2070nm",
-    r"\Semesterarbeit\SV176-a3-15C-2070nm",
-    # r"P:\Semesterarbeit\SV167-b5-2-10C-2070nm_bs",
-]
-
-def save_figure(figure, location, show=False, blocked=True):
-    figure.tight_layout()
-
-    figure.savefig(location, bbox_inches="tight", dpi=200)
-    if show:
-        figure.show(block=blocked)
 
 for path in paths:
     path = location + path
@@ -119,7 +93,7 @@ for path in paths:
             )
             fitp = fit[0]
             fitp = np.insert(fitp, 2, rns)
-            
+
         fit_params.append([current, *fitp])
         curvAx.errorbar(fluence, refl, yerr=error, label=power, c=color, ls="")
         curvAx.plot(fluence, gain_sat_r_gauss(fluence, *fitp), color=color)
@@ -144,7 +118,7 @@ for path in paths:
     curvAx.set_xlim(curvAx.get_xlim()[0], 75)
     curvAx.set_ylim(minR * 0.98, maxR * 1.02)
     # curvAx.set_ylim(98.7, 102.2)
-    curvAx.tick_params(axis='both', which='major', labelsize=10)
+    curvAx.tick_params(axis="both", which="major", labelsize=10)
     curvAx.set_xlabel(r"Probe fluence  / µJ cm$^{-2}$", fontsize=14)
     curvAx.set_ylabel("Reflectivity / %", fontsize=14)
     # curvAx.set_title(f"Nonlinear reflectivity for {title} at {temp}", fontsize=16)
@@ -172,5 +146,3 @@ for path in paths:
     df = pd.DataFrame(fit_params, columns=["Current [$A$]", *paramNames])
     df.to_csv(path + rf"\{title}_{temp_name}_{wavelength}_fit_parameters.csv", sep=",")
     print(f"Saved {title}")
-
-
