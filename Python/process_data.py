@@ -9,6 +9,11 @@ from scipy.optimize import curve_fit
 from helperFunctions import gain_sat_r_gauss, paths, power_curve_digit, save_figure
 import pandas as pd
 
+"""
+    processes the data
+    creates & saves the plot and the fitting parameter in the datafile location
+"""
+
 location = r"D:\polybox"
 
 for path in paths:

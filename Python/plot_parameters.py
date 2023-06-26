@@ -8,6 +8,9 @@ import pandas as pd
 
 location = r"D:\polybox"
 
+"""
+    Plots the fitting parameter for the 4 different vecsel chips
+"""
 
 paramFig: matplotlib.figure.Figure
 paramAx: matplotlib.axes.Axes
