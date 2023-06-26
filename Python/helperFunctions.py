@@ -82,3 +82,25 @@ def make_gif(frame_folder, filename, suffix=".png", duration=300):
         save_all=True,
         duration=duration,
     )
+
+def eformat(f, prec, exp_digits):
+    """ Formats numbers for the pulse fluences
+
+    Parameters
+    ----------
+    f : _type_
+        _description_
+    prec : _type_
+        _description_
+    exp_digits : _type_
+        _description_
+
+    Returns
+    -------
+    _type_
+        _description_
+    """
+    s = "%.*e" % (prec, f)
+    mantissa, exp = s.split("e")
+    # add 1 to digits as 1 is taken by sign +/-
+    return "%se%+0*d" % (mantissa, exp_digits + 1, int(exp))
