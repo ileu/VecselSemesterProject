@@ -3,54 +3,44 @@ import matplotlib.pyplot as plt
 import scipy.io as sio
 
 
-def sin_noise(x, w, amp, noise):
-    return np.sin(w * x) * amp + np.random.normal(0, noise, x.size)
+"""
+    This file plots the new triggering method for the signal trace
+"""
 
+# load the data of a measurement containing about 200 cycles
+data = sio.loadmat(f"Python\datafiles\data_13.mat")["data0"]
 
-def step_up(x, k, a):
-    return 1 / (1 + np.exp(-k * x)) ** a
-
-
-def step(x, k, a, dx):
-    return step_up(x, k, a) - step_up(x - dx, k, a)
-
-
-def step_moved(x, dx, k, a, dx2):
-    return step(x - dx, k, a, dx2)
-
-
-def three_step(x):
-    return (
-        0.7 * step(x, 5, 4, 10)
-        + 0.3 * step_moved(x, 5, 5, 4, 10)
-        + 0.4 * step_moved(x, 20, 5, 4, 5)
-    )
-
-
-dat = sio.loadmat(f"VecselSemesterProject\Python\datafiles\data_13.mat")["data0"]
-
-x_steps = np.linspace(0, 10, 800)
+# set triggering level
 level = 0.8
-# steps = three_step(x_steps) + sin_noise(x_steps, 2, 2e-3, 2e-3)
-# plt.plot(x_steps, steps)
 
-dat = dat[200:1000] / np.max(dat)
-mask = dat > level
+# select a single cycle from the measurement, which is about 800 data points, and normalize
+x_steps = np.linspace(0, 10, 800)
+
+data = data[200:1000]
+data = (data - np.min(data)) / (np.max(data) - np.min(data))
+data = data.flatten()
+
+# prepare mask for triggering
+mask = data > level
 diff_mask = np.flatnonzero((mask[:-1]) & (np.invert(mask[1:])))
-masked_steps = dat.copy()
+
+# points above triggerlevel
+masked_steps = data.copy()
 masked_steps[np.invert(mask)] = np.nan
 
+# take the last triggering point and select the 20 points around it for the slope detection
 slope_mask = np.arange(diff_mask[-1] - 10, diff_mask[-1] + 10)
-# plt.plot(x_test, masked_steps, "r")
 
 
-plt.plot(x_steps, dat, label="Data trace")
+# plotting
+
+plt.plot(x_steps, data, label="Data trace")
 
 plt.hlines(level, -1, 11, "gray", "--", alpha=0.8, label="Trigger level")
 
 plt.scatter(
     x_steps[diff_mask],
-    dat[diff_mask],
+    data[diff_mask],
     marker="o",
     color="r",
     s=30,
@@ -66,11 +56,11 @@ plt.ylim(-0.053217850471577025, 1.0410437465530953)
 
 plt.legend()
 plt.tight_layout()
-plt.savefig("VecselSemesterProject\Python\Images\corrected_signal_1.png")
+plt.savefig("Python\Images\corrected_signal_1.png")
 
 plt.scatter(
     x_steps[slope_mask],
-    dat[slope_mask],
+    data[slope_mask],
     marker=".",
     color="red",
     s=30,
@@ -80,7 +70,7 @@ plt.scatter(
 
 plt.legend()
 plt.tight_layout()
-plt.savefig("VecselSemesterProject\Python\Images\corrected_signal_2.png")
+plt.savefig("Python\Images\corrected_signal_2.png")
 
 plt.fill_between(
     x_steps[(diff_mask[-1] - 50) : (diff_mask[-1])],
@@ -95,5 +85,5 @@ plt.fill_between(
 plt.legend()
 plt.tight_layout()
 
-plt.savefig("VecselSemesterProject\Python\Images\corrected_signal_3.png")
+plt.savefig("Python\Images\corrected_signal_3.png")
 plt.show()
